@@ -1,11 +1,14 @@
 from functools import singledispatch
 from typing import Any
+from typing import List
 from typing import Optional
 from typing import Type
 from typing import TypeVar
 from typing import Union
 
 from .checks import has_annotated_init
+from .checks import is_bare
+from .checks import is_list
 from .checks import is_union_type
 from .functional_dispatch import FunctionalDispatch
 from .types import Build
@@ -44,6 +47,13 @@ def union_build(union: Union, data: Any, build: Build) -> Optional[T]:
     raise NotImplementedError("Unions other as optionals are not supported yet")
 
 
+def list_build(type_: Type[List], list_: List, build: Build) -> List:
+    element_type = type_.__args__[0]  # type: ignore
+    if is_bare(type_) or element_type is Any:
+        return list(list_)
+    return [build(element_type, element) for element in list_]
+
+
 class Builder:
     def __init__(self):
         self.single_dispatch = singledispatch(sentry)
@@ -52,6 +62,7 @@ class Builder:
         self.functional_dispatch: FunctionalDispatch = FunctionalDispatch(sentry)
         self.functional_dispatch.register(has_annotated_init)(annotated_init_build)
         self.functional_dispatch.register(is_union_type)(union_build)
+        self.functional_dispatch.register(is_list)(list_build)
 
     def build(self, type_: Type[T], data: Any) -> T:
         try:
