@@ -1,0 +1,59 @@
+# See http://pre-commit.com for more information
+# See http://pre-commit.com/hooks.html for more hooks
+default_language_version:
+    python: python3.8
+repos:
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v1.9.0
+    hooks:
+    -   id: reorder-python-imports
+        args: ['--py37-plus']
+
+-   repo: https://github.com/ambv/black
+    rev: 19.10b0
+    hooks:
+    - id: black
+      language_version: python3
+
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-json
+    -   id: debug-statements
+    -   id: requirements-txt-fixer
+
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.1.0
+    hooks:
+    #  Analyze your Python requirements for known security vulnerabilities
+    -   id: python-safety-dependencies-check
+
+-   repo: local
+    hooks:
+    -   id: mypy
+        name: typecheck files
+        entry: python -m mypy --config-file setup.cfg
+        language: system
+        types: [python]
+        exclude: >
+            (?x)^(
+                ((tests|docs)/.+|setup.py)
+            )$
+
+-   repo: local
+    hooks:
+    -   id: lint
+        name: lint files
+        entry: make lint
+        language: system
+        types: [python]
+
+-   repo: local
+    hooks:
+    -  id: unittests
+       name: unittests
+       entry: bash -c "python -m pytest tests/"
+       language: system
+       types: [python]
+       pass_filenames: false

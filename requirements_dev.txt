@@ -1,12 +1,15 @@
-pip==19.2.3
+black==19.10b0
 bump2version==0.5.11
-wheel==0.33.6
-watchdog==0.9.0
-flake8==3.7.8
-tox==3.14.0
 coverage==4.5.4
-Sphinx==1.8.5
-twine==1.14.0
+flake8==3.7.8
+mypy==0.782
+pip==19.2.3
+pre-commit==2.6.0
 
 pytest==4.6.5
 pytest-runner==5.1
+Sphinx==3.1.2
+tox==3.14.0
+twine==3.2.0
+watchdog==0.9.0
+wheel==0.33.6
