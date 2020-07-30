@@ -6,5 +6,6 @@ from typing import TypeVar
 T = TypeVar("T")
 
 Build = Callable[[Type[T], Any], T]
+Handler = Callable[[Any, Any, Build], T]
 NoneType = type(None)
-Check = Callable[[Type[T]], bool]
+Check = Callable[[Any], bool]

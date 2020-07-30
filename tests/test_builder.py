@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 def test_can_build_primitive_str(build):
@@ -19,3 +20,8 @@ def test_can_build_dataclass(build):
         foo: str
 
     assert build(A, {"foo": "bar"}) == A(foo="bar")
+
+
+def test_can_build_optional(build):
+    assert build(Optional[str], None) is None
+    assert build(Optional[str], "str") == "str"
