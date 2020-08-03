@@ -5,7 +5,11 @@ from typing import TypeVar
 
 T = TypeVar("T")
 
-Build = Callable[[Type[T], Any], T]
-Handler = Callable[[Any, Any, Build], T]
+Forge = Callable[[Type[T], Any], T]
+Handler = Callable[[Any, Any, Forge], T]
 NoneType = type(None)
 Check = Callable[[Any], bool]
+
+
+class CannotDispatch(Exception):
+    pass

@@ -4,11 +4,11 @@ __author__ = """Damian Świstowski"""
 __email__ = "damian@swistowski.org"
 __version__ = "0.1.0"
 
-from .builder import Builder
+from .svarog import Svarog
 
-default_builder = Builder()
+default_builder = Svarog()
 
-build = default_builder.build
+forge = default_builder.forge
+register_forge = default_builder.register_forge
 
-
-__all__ = "build"
+__all__ = "forge"

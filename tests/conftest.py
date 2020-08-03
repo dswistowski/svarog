@@ -1,14 +1,19 @@
 import pytest
 
-from svarog import Builder
-from svarog.types import Build
+from svarog import Svarog
+from svarog.types import Forge
 
 
 @pytest.fixture
-def builder() -> Builder:
-    return Builder()
+def svarog() -> Svarog:
+    return Svarog()
 
 
 @pytest.fixture
-def build(builder: Builder) -> Build:
-    return builder.build
+def forge(svarog) -> Forge:
+    return svarog.forge
+
+
+@pytest.fixture
+def register_forge(svarog):
+    return svarog.register_forge

@@ -16,7 +16,7 @@ def has_annotated_init(type_: Type[T]) -> bool:
     return hasattr(type_, "__init__") and hasattr(type_.__init__, "__annotations__")
 
 
-def is_union_type(type_: Union) -> bool:
+def is_union(type_: Union) -> bool:
     return (
         type_ is Union or isinstance(type_, _GenericAlias) and type_.__origin__ is Union
     )
@@ -38,4 +38,10 @@ def is_bare(type_: Any) -> bool:
         or args == Mapping.__args__  # type: ignore
         or args == Dict.__args__  # type: ignore
         or args == MutableSequence.__args__  # type: ignore
+    )
+
+
+def is_mapping(type_: Any) -> bool:
+    return type_ is Mapping or (
+        type_.__class__ is _GenericAlias and issubclass(type_.__origin__, Mapping)
     )
