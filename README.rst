@@ -14,10 +14,6 @@ Svarog
         :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/dswistowski/svarog/shield.svg
-     :target: https://pyup.io/repos/github/dswistowski/svarog/
-     :alt: Updates
-
 
 
 Svarog allow to create object from non typed data. All it need is annotated `__init__` method:
