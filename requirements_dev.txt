@@ -3,7 +3,7 @@ bump2version==0.5.11
 coverage==4.5.4
 flake8==3.7.8
 mypy==0.782
-pip==19.2.3
+pip==20.2.1
 pre-commit==2.6.0
 
 pytest==4.6.5
