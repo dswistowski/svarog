@@ -9,10 +9,11 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
-from svarog.checks import is_bare
-from svarog.types import CannotDispatch
-from svarog.types import Forge
-from svarog.types import NoneType
+from .checks import is_bare
+from .compat import get_args
+from .types import CannotDispatch
+from .types import Forge
+from .types import NoneType
 
 
 T = TypeVar("T")
@@ -73,8 +74,10 @@ def forge_union(union: Union, data: Any, forge: Forge) -> Optional[T]:
 
 
 def forge_list(type_: Type[List], list_: List, forge: Forge) -> List:
-    element_type = type_.__args__[0]  # type: ignore
-    if is_bare(type_) or element_type is Any:
+    if is_bare(type_):
+        return list(list_)
+    element_type = get_args(type_)[0]
+    if element_type is Any:
         return list(list_)
     return [forge(element_type, element) for element in list_]
 

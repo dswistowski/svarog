@@ -9,6 +9,10 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
+from .compat import _SpecialGenericAlias
+from .compat import get_args
+from .compat import get_origin
+
 T = TypeVar("T")
 
 
@@ -24,20 +28,19 @@ def is_union(type_: Union) -> bool:
 
 def is_list(type_: Any) -> bool:
     return type_ is List or (
-        type_.__class__ is _GenericAlias
-        and type_.__origin__ is not Union
-        and issubclass(type_.__origin__, Sequence)
+        isinstance(type_, (_GenericAlias, _SpecialGenericAlias))
+        and issubclass(get_origin(type_), Sequence)  # type: ignore
     )
 
 
 def is_bare(type_: Any) -> bool:
-    args = type_.__args__
+    args = get_args(type_)
     return (
-        args == List.__args__  # type: ignore
-        or args == Sequence.__args__  # type: ignore
-        or args == Mapping.__args__  # type: ignore
-        or args == Dict.__args__  # type: ignore
-        or args == MutableSequence.__args__  # type: ignore
+        args == get_args(List)
+        or args == get_args(Sequence)
+        or args == get_args(Mapping)
+        or args == get_args(Dict)
+        or args == get_args(MutableSequence)
     )
 
 

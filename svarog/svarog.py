@@ -2,7 +2,6 @@ import sys
 from functools import lru_cache
 from typing import Any
 from typing import Dict
-from typing import ForwardRef
 from typing import Type
 from typing import TypeVar
 
@@ -10,6 +9,7 @@ from .checks import has_annotated_init
 from .checks import is_list
 from .checks import is_mapping
 from .checks import is_union
+from .compat import ForwardRef
 from .dispatchers.multi import MultiDispatcher
 from .forges import _clean_annotations
 from .forges import forge_annotated_init
