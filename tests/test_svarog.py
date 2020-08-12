@@ -219,3 +219,11 @@ def test_can_build_class_without_annotations(forge):
             )
 
     assert forge(A, {"a": 42, "b": "foo-bar"}) == A(42, "foo-bar")
+
+
+def test_can_build_if_there_is_default(forge):
+    @dataclass
+    class A:
+        x: int = 0
+
+    assert forge(A, {"x": 42}) == A(42)
