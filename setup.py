@@ -38,6 +38,7 @@ setup(
     license="MIT license",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
+    package_data={"svarog": ["py.typed"],},
     keywords="svarog",
     name="svarog",
     packages=find_packages(include=["svarog", "svarog.*"]),
