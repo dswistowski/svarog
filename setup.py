@@ -38,6 +38,7 @@ setup(
     license="MIT license",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
+    package_data={"svarog": ["py.typed"],},
     keywords="svarog",
     name="svarog",
     packages=find_packages(include=["svarog", "svarog.*"]),
@@ -45,6 +46,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/dswistowski/svarog",
-    version="0.1.0",
+    version="0.1.2",
     zip_safe=False,
 )
