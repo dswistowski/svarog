@@ -6,7 +6,7 @@ mypy==0.800
 pip==21.0.1
 pre-commit==2.10.1
 pytest==6.2.2
-pytest-runner==5.2
+pytest-runner==5.3.0
 Sphinx==3.5.1
 tox==3.21.4
 twine==3.2.0
