@@ -2,7 +2,7 @@ black==21.5b1
 bump2version==1.0.1
 coverage==5.5
 flake8==3.9.2
-mypy==0.812
+mypy==0.901
 pip==21.1.2
 pre-commit==2.13.0
 pytest==6.2.4
