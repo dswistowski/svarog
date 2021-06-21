@@ -227,3 +227,11 @@ def test_can_build_if_there_is_default(forge):
         x: int = 0
 
     assert forge(A, {"x": 42}) == A(42)
+
+
+def test_can_build_nested_types_with_args(forge):
+    @dataclass
+    class A:
+        x: Optional[Mapping[str, Any]] = None
+
+    assert forge(A, {"x": {"foo": "bar"}}) == A(x={"foo": "bar"})

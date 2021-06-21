@@ -56,8 +56,8 @@ class Svarog:
                 and sub_type is not Any
                 and hasattr(sub_type, "__args__")
             ):
-                for sub_type in annotation.__args__:
-                    update_subtype(sub_type)
+                for arg in sub_type.__args__:
+                    update_subtype(arg)
 
         for _, annotation in _clean_annotations(type_.__init__):
             update_subtype(annotation)
