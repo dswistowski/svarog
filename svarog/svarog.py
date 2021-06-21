@@ -2,6 +2,7 @@ import sys
 from functools import lru_cache
 from typing import Any
 from typing import Dict
+from typing import Hashable
 from typing import Type
 from typing import TypeVar
 
@@ -19,10 +20,10 @@ from .forges import forge_none
 from .forges import forge_union
 from .types import CannotDispatch
 from .types import Check
-from .types import Forge
+from .types import Handler
 from .types import NoneType
 
-T = TypeVar("T")
+T = TypeVar("T", bound=Hashable)
 
 
 class Svarog:
@@ -39,10 +40,10 @@ class Svarog:
         self._dispatcher.register_func(is_mapping, forge_mapping)
         self._dispatcher.register_func(is_union, forge_union)
 
-    def register_forge(self, type_: Type, forge: Forge) -> None:
+    def register_forge(self, type_: Type, forge: Handler) -> None:
         self._dispatcher.register_cls(type_, forge)
 
-    def register_mold(self, check: Check, forge: Forge) -> None:
+    def register_mold(self, check: Check, forge: Handler) -> None:
         self._dispatcher.register_func(check, forge)
 
     @lru_cache(None)
