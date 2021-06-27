@@ -11,4 +11,4 @@ default_builder = Svarog()
 forge = default_builder.forge
 register_forge = default_builder.register_forge
 
-__all__ = "forge"
+__all__ = ["forge"]
