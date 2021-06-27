@@ -1,6 +1,6 @@
 import sys
 from functools import lru_cache
-from typing import Any
+from typing import Any, _eval_type
 from typing import Dict
 from typing import Hashable
 from typing import Type
@@ -83,6 +83,6 @@ class Svarog:
             owner: Type = self._refs_owners[type_]
         except KeyError:
             raise RuntimeError(f"Unknown forward ref: {type_}")
-        return type_._evaluate(  # type: ignore
-            vars(sys.modules[owner.__module__]), getattr(owner, "__dict__", {})
+        return _eval_type(
+            type_, vars(sys.modules[owner.__module__]), getattr(owner, "__dict__", {})
         )
