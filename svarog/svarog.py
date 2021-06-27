@@ -1,6 +1,7 @@
 import sys
 from functools import lru_cache
-from typing import Any, _eval_type
+from typing import Any
+from typing import _eval_type  # type: ignore
 from typing import Dict
 from typing import Hashable
 from typing import Type
