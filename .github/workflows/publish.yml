@@ -33,11 +33,11 @@ jobs:
         python -m poetry install
     - name: Run build
       run: |
-          python -m poetry build
+          python -m poetry run make dist
     - name: Run publish
       run: |
           python -m poetry version
-          dunamai from git --debug
+          python -m poetry run dunamai from git --debug
           git log
           # poetry publish --username __token__ --password "${PYPI_TOKEN}"
       env:
