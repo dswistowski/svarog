@@ -37,6 +37,8 @@ jobs:
     - name: Run publish
       run: |
           python -m poetry version
+          dunamai from git --debug
+          git log
           # poetry publish --username __token__ --password "${PYPI_TOKEN}"
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
