@@ -6,8 +6,8 @@ Svarog
 .. image:: https://img.shields.io/pypi/v/svarog.svg
         :target: https://pypi.python.org/pypi/svarog
 
-.. image:: https://img.shields.io/travis/dswistowski/svarog.svg
-        :target: https://travis-ci.com/dswistowski/svarog
+.. image:: https://img.shields.io/github/checks-status/dswistowski/svarog/master
+        :target: https://github.com/dswistowski/svarog
 
 .. image:: https://readthedocs.org/projects/svarog/badge/?version=latest
         :target: https://svarog.readthedocs.io/en/latest/?badge=latest

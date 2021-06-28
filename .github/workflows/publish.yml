@@ -3,15 +3,11 @@
 
 name: Python Package
 
-on:
-  push:
-    branches: [ master ]
-    tags:
-      - 'v*.*.*'
+on: create
 
 jobs:
   publish:
-
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
 
     steps:
