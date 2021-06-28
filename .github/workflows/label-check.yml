@@ -1,0 +1,27 @@
+name: Label checker
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize, reopened]
+
+jobs:
+  label-check-category:
+    runs-on: ubuntu-latest
+    name: label checker (category)
+    steps:
+    - uses: zwaldowski/match-label-action@v2
+      with:
+        allowed: >
+            [rd] fixed
+            [rd] added
+            [rd] updated
+  label-check-version-increment:
+    runs-on: ubuntu-latest
+    name: label checker (version increment)
+    steps:
+    - uses: zwaldowski/match-label-action@v2
+      with:
+        allowed: >
+            [rd-semver] major
+            [rd-semver] minor
+            [rd-semver] patch"
