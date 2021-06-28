@@ -38,7 +38,6 @@ jobs:
           python -m poetry build
     - name: Run publish
       run: |
-          python -m poetry version
-          # poetry publish --username __token__ --password "${PYPI_TOKEN}"
+          poetry publish --username __token__ --password "${PYPI_TOKEN}"
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
