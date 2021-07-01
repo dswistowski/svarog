@@ -1,0 +1,8 @@
+path_classifiers:
+  test:
+  - exclude: "/"
+  - "tests"
+extraction:
+  python:
+    index:
+      include: "svarog/"
