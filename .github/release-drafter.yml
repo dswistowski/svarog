@@ -1,0 +1,33 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: '🚀 Added'
+    labels:
+      - '[rd] added'
+  - title: '🐛 Fixed'
+    labels:
+      - '[rd] fixed'
+  - title: '🧰 Updated'
+    label: '[rd] updated'
+replacers:
+  - search: '/\[?([A-Za-z]{2,4}-\d{1,4})\]?:?(.*)/g'
+    replace: '[$1](https://babylonpartners.atlassian.net/browse/$1): $2'
+change-template: '- $TITLE (#$NUMBER)'
+version-resolver:
+  major:
+    labels:
+      - '[rd-semver] major'
+  minor:
+    labels:
+      - '[rd-semver] minor'
+  patch:
+    labels:
+      - '[rd-semver] patch'
+  default: minor
+template: |
+  ## What’s Changed
+
+  $CHANGES
+
+  Previous Version: $PREVIOUS_TAG
+  Contributors: $CONTRIBUTORS
