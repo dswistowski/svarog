@@ -3,7 +3,10 @@
 
 name: Python Package
 
-on: create
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   publish:
