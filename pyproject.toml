@@ -21,7 +21,7 @@ classifiers = [
 keywords = ["svarog", "json", "structure", "typing"]
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.11"
+python = ">=3.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
