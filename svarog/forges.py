@@ -91,5 +91,5 @@ def forge_mapping(type_: Type[Mapping], mapping: Mapping, forge: Forge) -> Mappi
     return {forge(key_arg, k): forge(value_arg, v) for k, v in mapping.items()}
 
 
-def forge_literal(_, literal: str, __) -> str:
+def forge_literal(_: Any, literal: str, __: Any) -> str:
     return str(literal)

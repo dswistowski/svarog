@@ -32,30 +32,29 @@ def has_annotated_init(type_: Type[T]) -> bool:
     )
 
 
-def is_literal(type_: Literal) -> bool:
-    if is_alias(type_):
-        type_ = type_.__origin__
-    try:
-        return isinstance(type_, _SpecialForm) and type_._name == "Literal"
-    except TypeError:
-        return False
+def is_literal(type_: Any) -> bool:
+    if origin := get_origin(type_):
+        try:
+            return origin._name == "Literal"
+        except AttributeError:
+            pass
+    return False
 
 
 def is_union(type_: Union) -> bool:
-    return type_ is Union or is_alias(type_) and type_.__origin__ is Union
+    return get_origin(type_) is Union
 
 
-def is_sequence(type_) -> bool:
+def is_sequence(type_: Any) -> bool:
     try:
-        return issubclass(get_origin(type_), Sequence)
+        return issubclass(get_origin(type_), Sequence)  # type: ignore
     except TypeError:
         return False
 
 
 def is_list(type_: Any) -> bool:
     return type_ is List or (
-        isinstance(type_, (_GenericAlias, _SpecialGenericAlias))
-        and is_sequence(type_)  # type: ignore
+        isinstance(type_, (_GenericAlias, _SpecialGenericAlias)) and is_sequence(type_)
     )
 
 
