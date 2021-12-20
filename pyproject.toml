@@ -27,7 +27,7 @@ pytest = "*"
 black = "*"
 mypy = "*"
 flake8 = "*"
-Sphinx = "^4.2.0"
+Sphinx = "^4.3.2"
 poetry-dynamic-versioning = "^0.13.1"
 
 
