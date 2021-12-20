@@ -7,13 +7,13 @@ from typing import Hashable
 from typing import Type
 from typing import TypeVar
 
-from .checks import has_annotated_init
+from .checks import has_annotated_init, is_literal
 from .checks import is_list
 from .checks import is_mapping
 from .checks import is_union
 from .compat import ForwardRef
 from .dispatchers.multi import MultiDispatcher
-from .forges import _clean_annotations
+from .forges import _clean_annotations, forge_literal
 from .forges import forge_annotated_init
 from .forges import forge_list
 from .forges import forge_mapping
@@ -40,6 +40,7 @@ class Svarog:
         self._dispatcher.register_func(is_list, forge_list)
         self._dispatcher.register_func(is_mapping, forge_mapping)
         self._dispatcher.register_func(is_union, forge_union)
+        self._dispatcher.register_func(is_literal, forge_literal)
 
     def register_forge(self, type_: Type, forge: Handler) -> None:
         self._dispatcher.register_cls(type_, forge)
