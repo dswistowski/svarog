@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from dataclasses import field
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 from typing import ClassVar
 from typing import Mapping
 from typing import Optional
@@ -235,3 +235,16 @@ def test_can_build_nested_types_with_args(forge):
         x: Optional[Mapping[str, Any]] = None
 
     assert forge(A, {"x": {"foo": "bar"}}) == A(x={"foo": "bar"})
+
+
+def test_can_build_literal(forge):
+    T = Literal['a', 'b', 'c']
+    assert forge(T, "a") == "a"
+
+
+def test_can_build_literal_key(forge):
+    @dataclass
+    class B:
+        x: Mapping[Literal['a'], Literal['b']]
+
+    assert forge(B, {"x": {"a": "b"}}) == B(x={'a': 'b'})

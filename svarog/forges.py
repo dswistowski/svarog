@@ -1,6 +1,6 @@
 import inspect
 from functools import lru_cache
-from typing import Any
+from typing import Any, Literal
 from typing import ForwardRef
 from typing import List
 from typing import Mapping
@@ -89,3 +89,7 @@ def forge_mapping(type_: Type[Mapping], mapping: Mapping, forge: Forge) -> Mappi
         return dict(mapping)
     key_arg, value_arg = type_.__args__  # type: ignore
     return {forge(key_arg, k): forge(value_arg, v) for k, v in mapping.items()}
+
+
+def forge_literal(_, literal: str, __) -> str:
+    return str(literal)

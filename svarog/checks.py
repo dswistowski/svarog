@@ -1,4 +1,4 @@
-from typing import _GenericAlias  # type: ignore
+from typing import _GenericAlias, Literal, _LiteralGenericAlias  # type: ignore
 from typing import Any
 from typing import Dict
 from typing import List
@@ -16,20 +16,43 @@ from .compat import get_origin
 T = TypeVar("T")
 
 
+def is_alias(type_: Any) -> bool:
+    try:
+        return isinstance(type_, _GenericAlias)
+    except TypeError:
+        return False
+
+
 def has_annotated_init(type_: Type[T]) -> bool:
-    return hasattr(type_, "__init__") and hasattr(type_.__init__, "__annotations__")
+    return (
+        not is_alias(type_)
+        and hasattr(type_, "__init__")
+        and hasattr(type_.__init__, "__annotations__")
+    )
+
+
+def is_literal(type_: Literal) -> bool:
+    try:
+        return isinstance(type_, _LiteralGenericAlias)
+    except TypeError:
+        return False
 
 
 def is_union(type_: Union) -> bool:
-    return (
-        type_ is Union or isinstance(type_, _GenericAlias) and type_.__origin__ is Union
-    )
+    return type_ is Union or is_alias(type_) and type_.__origin__ is Union
+
+
+def is_sequence(type_) -> bool:
+    try:
+        return issubclass(get_origin(type_), Sequence)
+    except TypeError:
+        return False
 
 
 def is_list(type_: Any) -> bool:
     return type_ is List or (
         isinstance(type_, (_GenericAlias, _SpecialGenericAlias))
-        and issubclass(get_origin(type_), Sequence)  # type: ignore
+        and is_sequence(type_)  # type: ignore
     )
 
 
