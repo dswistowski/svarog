@@ -11,6 +11,7 @@ from uuid import UUID
 
 import pytest
 
+from svarog import Svarog
 from svarog.types import NoneType
 
 
@@ -248,3 +249,28 @@ def test_can_build_literal_key(forge):
         x: Mapping[Literal["a"], Literal["b"]]
 
     assert forge(B, {"x": {"a": "b"}}) == B(x={"a": "b"})
+
+
+def test_can_do_camel_case(svarog: Svarog):
+    svarog.enable_snake_case()
+
+    @dataclass
+    class A:
+        foo: str
+        lorem_ipsum: str
+
+    assert svarog.forge(A, {"Foo": "bar", "LoremIpsum": "lorem"}) == A(
+        foo="bar", lorem_ipsum="lorem"
+    )
+
+
+def test_do_not_camel_case_mappping(svarog: Svarog):
+    svarog.enable_snake_case()
+
+    @dataclass
+    class A:
+        lorem_ipsum: Mapping[str, Any]
+
+    assert svarog.forge(A, {"LoremIpsum": {"LookAtMe": 42}}) == A(
+        lorem_ipsum={"LookAtMe": 42}
+    )
