@@ -1,4 +1,4 @@
-from typing import _GenericAlias, Literal, _SpecialForm  # type: ignore
+from typing import _GenericAlias  # type: ignore
 from typing import Any
 from typing import Dict
 from typing import List
