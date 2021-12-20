@@ -12,8 +12,9 @@ from .checks import is_list
 from .checks import is_mapping
 from .checks import is_union
 from .compat import ForwardRef
-from .dispatchers.multi import MultiDispatcher
-from .forges import _clean_annotations, forge_literal
+from .dispatchers.functional import FunctionalDispatch
+from .dispatchers.multi import MultiDispatcher, sentry
+from .forges import _clean_annotations, forge_literal, filter_cammel_case
 from .forges import forge_annotated_init
 from .forges import forge_list
 from .forges import forge_mapping
@@ -30,7 +31,7 @@ T = TypeVar("T", bound=Hashable)
 class Svarog:
     _refs_owners: Dict[ForwardRef, Type]
 
-    def __init__(self):
+    def __init__(self, snake_case: bool = False):
         self._refs_owners = {}
         self._dispatcher = MultiDispatcher()
 
@@ -41,6 +42,17 @@ class Svarog:
         self._dispatcher.register_func(is_mapping, forge_mapping)
         self._dispatcher.register_func(is_union, forge_union)
         self._dispatcher.register_func(is_literal, forge_literal)
+
+        self._filter = FunctionalDispatch(sentry)
+
+        if snake_case:
+            self.enable_snake_case()
+
+    def enable_snake_case(self):
+        self.register_filter(has_annotated_init, filter_cammel_case)
+
+    def register_filter(self, predicate: Check, forge: Handler) -> None:
+        self._filter.register(predicate)(forge)
 
     def register_forge(self, type_: Type, forge: Handler) -> None:
         self._dispatcher.register_cls(type_, forge)
@@ -73,6 +85,10 @@ class Svarog:
 
         if type_ is Any:
             return data
+        try:
+            data = self._filter(type_, data, self.forge)
+        except CannotDispatch:
+            pass
 
         handler = self._dispatcher.dispatch(type_)
         try:
