@@ -1,4 +1,4 @@
-from typing import _GenericAlias, Literal, _LiteralGenericAlias  # type: ignore
+from typing import _GenericAlias, Literal, _SpecialForm  # type: ignore
 from typing import Any
 from typing import Dict
 from typing import List
@@ -12,6 +12,7 @@ from typing import Union
 from .compat import _SpecialGenericAlias
 from .compat import get_args
 from .compat import get_origin
+
 
 T = TypeVar("T")
 
@@ -32,8 +33,10 @@ def has_annotated_init(type_: Type[T]) -> bool:
 
 
 def is_literal(type_: Literal) -> bool:
+    if is_alias(type_):
+        type_ = type_.__origin__
     try:
-        return isinstance(type_, _LiteralGenericAlias)
+        return isinstance(type_, _SpecialForm) and type_._name == "Literal"
     except TypeError:
         return False
 
@@ -67,7 +70,14 @@ def is_bare(type_: Any) -> bool:
     )
 
 
+def is_mapping_alias(type_: Any) -> bool:
+    try:
+        return type_.__class__ is _GenericAlias and issubclass(
+            type_.__origin__, Mapping
+        )
+    except TypeError:
+        return False
+
+
 def is_mapping(type_: Any) -> bool:
-    return type_ is Mapping or (
-        type_.__class__ is _GenericAlias and issubclass(type_.__origin__, Mapping)
-    )
+    return type_ is Mapping or is_mapping_alias(type_)

@@ -1,6 +1,6 @@
 import inspect
 from functools import lru_cache
-from typing import Any, Literal
+from typing import Any
 from typing import ForwardRef
 from typing import List
 from typing import Mapping

@@ -238,13 +238,13 @@ def test_can_build_nested_types_with_args(forge):
 
 
 def test_can_build_literal(forge):
-    T = Literal['a', 'b', 'c']
+    T = Literal["a", "b", "c"]
     assert forge(T, "a") == "a"
 
 
 def test_can_build_literal_key(forge):
     @dataclass
     class B:
-        x: Mapping[Literal['a'], Literal['b']]
+        x: Mapping[Literal["a"], Literal["b"]]
 
-    assert forge(B, {"x": {"a": "b"}}) == B(x={'a': 'b'})
+    assert forge(B, {"x": {"a": "b"}}) == B(x={"a": "b"})
