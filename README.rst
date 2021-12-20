@@ -112,6 +112,14 @@ Foo(type=<FooType.LOREM: 'lorem'>, params=LoremFooParams(lorem='foo-bar'))
 Foo(type=<FooType.IPSUM: 'ipsum'>, params=IpsumFooParams(ipsum=42))
 
 
+Support for CamelCase to snake_case convertion:
+
+>>> class Snake:
+...     lorem_ipsum: int
+>>> forge = Svarog(snake_case=True).forge
+>>> forge(Snake, {"LoremIpsum": 42})
+Snake(lorem_ipsum=42)
+
 * Free software: MIT license
 * Documentation: https://svarog.readthedocs.io.
 

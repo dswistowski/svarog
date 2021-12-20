@@ -11,6 +11,7 @@ from typing import Union
 
 from .checks import is_bare
 from .compat import get_args
+from .tools import camel_to_snake
 from .types import CannotDispatch
 from .types import Forge
 from .types import NoneType
@@ -93,3 +94,7 @@ def forge_mapping(type_: Type[Mapping], mapping: Mapping, forge: Forge) -> Mappi
 
 def forge_literal(_: Any, literal: str, __: Any) -> str:
     return str(literal)
+
+
+def filter_cammel_case(_: Any, data: Mapping[str, Any], __: Any) -> Mapping[str, Any]:
+    return {camel_to_snake(k): v for k, v in data.items()}
