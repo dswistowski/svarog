@@ -59,7 +59,7 @@ def forge_annotated_init(type_: Type[T], data: Any, forge: Forge) -> T:
     kwargs = dict(_cached_defaults(type_.__init__))
     kwargs.update(forged)
 
-    return type_(**kwargs)  # type: ignore
+    return type_(**kwargs)
 
 
 def forge_union(union: Union, data: Any, forge: Forge) -> Optional[T]:
