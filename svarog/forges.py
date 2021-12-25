@@ -96,5 +96,5 @@ def forge_literal(_: Any, literal: str, __: Any) -> str:
     return str(literal)
 
 
-def filter_cammel_case(_: Any, data: Mapping[str, Any], __: Any) -> Mapping[str, Any]:
+def filter_cammel_case(_: Any, data: Mapping[str, Any]) -> Mapping[str, Any]:
     return {camel_to_snake(k): v for k, v in data.items()}

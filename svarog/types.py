@@ -7,6 +7,7 @@ T = TypeVar("T")
 
 Forge = Callable[[Type[T], Any], T]
 Handler = Callable[[Any, Any, Forge], T]
+Filter = Callable[[Any, Any], Any]
 NoneType = type(None)
 Check = Callable[[Any], bool]
 

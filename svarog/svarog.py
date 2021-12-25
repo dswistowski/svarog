@@ -12,7 +12,7 @@ from .checks import is_list
 from .checks import is_mapping
 from .checks import is_union
 from .compat import ForwardRef
-from .dispatchers.functional import FunctionalDispatch
+from .dispatchers.functional import FunctionalDispatch, PredicatedFilters
 from .dispatchers.multi import MultiDispatcher, sentry
 from .forges import _clean_annotations, forge_literal, filter_cammel_case
 from .forges import forge_annotated_init
@@ -20,7 +20,7 @@ from .forges import forge_list
 from .forges import forge_mapping
 from .forges import forge_none
 from .forges import forge_union
-from .types import CannotDispatch
+from .types import CannotDispatch, Filter
 from .types import Check
 from .types import Handler
 from .types import NoneType
@@ -35,24 +35,24 @@ class Svarog:
         self._refs_owners = {}
         self._dispatcher = MultiDispatcher()
 
-        self._dispatcher.register_cls(NoneType, forge_none)
-        self._dispatcher.register_func(has_annotated_init, forge_annotated_init)
+        self.register_forge(NoneType, forge_none)  # type: ignore
+        self.register_mold(has_annotated_init, forge_annotated_init)
 
-        self._dispatcher.register_func(is_list, forge_list)
-        self._dispatcher.register_func(is_mapping, forge_mapping)
-        self._dispatcher.register_func(is_union, forge_union)
-        self._dispatcher.register_func(is_literal, forge_literal)
+        self.register_mold(is_list, forge_list)
+        self.register_mold(is_mapping, forge_mapping)
+        self.register_mold(is_union, forge_union)
+        self.register_mold(is_literal, forge_literal)
 
-        self._filter = FunctionalDispatch(sentry)
+        self._filter = PredicatedFilters()
 
         if snake_case:
             self.enable_snake_case()
 
     def enable_snake_case(self):
-        self.register_filter(has_annotated_init, filter_cammel_case)
+        self.add_filter(has_annotated_init, filter_cammel_case)
 
-    def register_filter(self, predicate: Check, forge: Handler) -> None:
-        self._filter.register(predicate)(forge)
+    def add_filter(self, predicate: Check, filter: Filter) -> None:
+        self._filter.add(predicate)(filter)
 
     def register_forge(self, type_: Type, forge: Handler) -> None:
         self._dispatcher.register_cls(type_, forge)
@@ -85,10 +85,8 @@ class Svarog:
 
         if type_ is Any:
             return data
-        try:
-            data = self._filter(type_, data, self.forge)
-        except CannotDispatch:
-            pass
+
+        data = self._filter(type_, data)
 
         handler = self._dispatcher.dispatch(type_)
         try:
