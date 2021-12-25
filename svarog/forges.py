@@ -26,7 +26,7 @@ def _cached_defaults(thingy):
     return {
         name: parameter.default
         for name, parameter in parameters.items()
-        if parameter.default != inspect._empty  # type: ignore
+        if parameter.default != inspect._empty
     }
 
 
