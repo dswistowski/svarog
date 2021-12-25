@@ -6,6 +6,7 @@ from typing import Type
 from typing import TypeVar
 
 from svarog.types import Check
+from svarog.types import Filter
 from svarog.types import Forge
 from svarog.types import Handler
 
@@ -14,6 +15,26 @@ T = TypeVar("T")
 
 def _true(*args, **kwargs):
     return True
+
+
+class PredicatedFilters:
+    __slots__ = ("_registry",)
+
+    def __init__(self):
+        self._registry: Sequence[Tuple[Check, Filter]] = ()
+
+    def add(self, check: Check) -> Callable[[Filter], Filter]:
+        def wrapper(filter: Filter) -> Filter:
+            self._registry = (*self._registry, (check, filter))
+            return filter
+
+        return wrapper
+
+    def __call__(self, type_: Type, data: Any) -> Any:
+        for check, filter in self._registry:
+            if check(type_):
+                data = filter(type_, data)
+        return data
 
 
 class FunctionalDispatch:

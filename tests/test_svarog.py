@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from dataclasses import field
 from enum import Enum
-from typing import Any, Literal
+from typing import Any
 from typing import ClassVar
+from typing import Literal
 from typing import Mapping
 from typing import Optional
 from typing import Sequence
@@ -274,3 +275,14 @@ def test_do_not_camel_case_mappping(svarog: Svarog):
     assert svarog.forge(A, {"LoremIpsum": {"LookAtMe": 42}}) == A(
         lorem_ipsum={"LookAtMe": 42}
     )
+
+
+def test_can_have_multiple_filters(svarog: Svarog):
+    svarog.add_filter(lambda t: True, lambda t, d: d * 2)
+    svarog.add_filter(lambda t: issubclass(t, float), lambda _, d: d * 1.5)
+    svarog.add_filter(lambda t: issubclass(t, int), lambda _, d: d * 3)
+    svarog.add_filter(lambda t: issubclass(t, str), lambda _, d: f"X{d}")
+
+    assert svarog.forge(str, "Boo") == "XBooBoo"
+    assert svarog.forge(int, 4) == 4 * 2 * 3
+    assert svarog.forge(float, 3.0) == 3.0 * 2 * 1.5
