@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from dataclasses import field
 from enum import Enum
-from typing import Any, Literal
+from typing import Any
 from typing import ClassVar
+from typing import Literal
 from typing import Mapping
 from typing import Optional
 from typing import Sequence

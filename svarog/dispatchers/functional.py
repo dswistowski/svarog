@@ -6,9 +6,9 @@ from typing import Type
 from typing import TypeVar
 
 from svarog.types import Check
+from svarog.types import Filter
 from svarog.types import Forge
 from svarog.types import Handler
-from svarog.types import Filter
 
 T = TypeVar("T")
 
