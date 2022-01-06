@@ -265,6 +265,20 @@ def test_can_do_camel_case(svarog: Svarog):
     )
 
 
+def test_camel_case_should_not_break_simple_types(svarog: Svarog):
+    svarog.enable_snake_case()
+
+    class A:
+        def __init__(self, value: int):
+            self._value = value
+
+        @property
+        def v(self):
+            return self._value
+
+    assert svarog.forge(A, 5).v == 5
+
+
 def test_do_not_camel_case_mappping(svarog: Svarog):
     svarog.enable_snake_case()
 

@@ -97,4 +97,7 @@ def forge_literal(_: Any, literal: str, __: Any) -> str:
 
 
 def filter_cammel_case(_: Any, data: Mapping[str, Any]) -> Mapping[str, Any]:
-    return {camel_to_snake(k): v for k, v in data.items()}
+    try:
+        return {camel_to_snake(k): v for k, v in data.items()}
+    except AttributeError:
+        return data
