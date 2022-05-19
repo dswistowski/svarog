@@ -75,5 +75,5 @@ def test_forge_annotated_init_should_apply_type_if_not_any(forge):
 
 @pytest.mark.skipif(sys.version_info < (3, 10), reason="requires python3.10 or higher")
 def test_forge_or_union(forge):
-    assert forge(str | None, None) == None
+    assert forge(str | None, None) is None
     assert forge(str | None, "foo") == "foo"
