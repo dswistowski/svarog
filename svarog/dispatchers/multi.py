@@ -33,7 +33,7 @@ class MultiDispatcher:
     def _dispatch(self, type_):
         try:
             dispatch = self._single_dispatch.dispatch(type_)
-        except AttributeError:
+        except (AttributeError, TypeError):
             dispatch = CannotDispatch
 
         if dispatch == CannotDispatch:

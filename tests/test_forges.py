@@ -1,6 +1,8 @@
+import sys
 from typing import Any
 from typing import List
 from typing import Mapping
+
 from typing import Union
 
 import pytest
@@ -69,3 +71,9 @@ def test_forge_annotated_init_should_apply_type_if_not_any(forge):
             self.a = a
 
     assert forge_annotated_init(A, {"a": 42}, forge).a == "42"
+
+
+@pytest.mark.skipif(sys.version_info < (3, 10), reason="requires python3.10 or higher")
+def test_forge_or_union(forge):
+    assert forge(str | None, None) is None
+    assert forge(str | None, "foo") == "foo"
