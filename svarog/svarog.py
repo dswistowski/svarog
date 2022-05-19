@@ -95,7 +95,7 @@ class Svarog:
         handler = self._dispatcher.dispatch(type_)
         try:
             return handler(type_, data, self.forge)
-        except CannotDispatch:
+        except (CannotDispatch, TypeError):
             return type_(data)  # type: ignore
 
     def _resolve_forward_ref(self, type_: ForwardRef) -> Type:
