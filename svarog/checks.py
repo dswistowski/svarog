@@ -1,3 +1,4 @@
+import sys
 from typing import _GenericAlias  # type: ignore
 from typing import Any
 from typing import Dict
@@ -42,7 +43,13 @@ def is_literal(type_: Any) -> bool:
 
 
 def is_union(type_: Union) -> bool:
-    return get_origin(type_) is Union
+    origin = get_origin(type_)
+    if origin is Union:
+        return True
+    if sys.version_info >= (3, 10):
+        UnionType = type(str | None)
+        return origin is UnionType
+    return False
 
 
 def is_sequence(type_: Any) -> bool:
