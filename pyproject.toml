@@ -28,7 +28,7 @@ black = "*"
 mypy = "*"
 flake8 = "*"
 Sphinx = "^5.0.1"
-poetry-dynamic-versioning = "^0.17.0"
+poetry-dynamic-versioning = "^0.17.1"
 pre-commit = "^2.19.0"
 
 
