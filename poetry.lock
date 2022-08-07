@@ -344,7 +344,7 @@ tomlkit = ">=0.4"
 
 [[package]]
 name = "pre-commit"
-version = "2.19.0"
+version = "2.20.0"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
@@ -654,7 +654,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "643ccf083c1f9004a0b26c993566c551cc51d9e955c6433f8fdddc7ebdcd0af5"
+content-hash = "519db0d85e84c2b928162ec5a74db887c1105c98714a07789673a499a2ec2a08"
 
 [metadata.files]
 alabaster = [
@@ -895,8 +895,8 @@ poetry-dynamic-versioning = [
     {file = "poetry_dynamic_versioning-0.17.1-py3-none-any.whl", hash = "sha256:647d41eb554496eb657c7745ab2321b77d1f9c7cf52f7deb6ff674736fbd8ea1"},
 ]
 pre-commit = [
-    {file = "pre_commit-2.19.0-py2.py3-none-any.whl", hash = "sha256:10c62741aa5704faea2ad69cb550ca78082efe5697d6f04e5710c3c229afdd10"},
-    {file = "pre_commit-2.19.0.tar.gz", hash = "sha256:4233a1e38621c87d9dda9808c6606d7e7ba0e087cd56d3fe03202a01d2919615"},
+    {file = "pre_commit-2.20.0-py2.py3-none-any.whl", hash = "sha256:51a5ba7c480ae8072ecdb6933df22d2f812dc897d5fe848778116129a681aac7"},
+    {file = "pre_commit-2.20.0.tar.gz", hash = "sha256:a978dac7bc9ec0bcee55c18a277d553b0f419d259dadb4b9418ff2d00eb43959"},
 ]
 py = [
     {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
