@@ -1,4 +1,5 @@
 import sys
+from dataclasses import dataclass
 from typing import Any
 from typing import List
 from typing import Mapping
@@ -77,3 +78,18 @@ def test_forge_annotated_init_should_apply_type_if_not_any(forge):
 def test_forge_or_union(forge):
     assert forge(str | None, None) is None
     assert forge(str | None, "foo") == "foo"
+
+
+def test_should_fail_if_child_is_not_correctly_forged(forge):
+    @dataclass
+    class Child:
+        a: str
+        b: str
+
+    class Parent:
+        def __init__(self, child: Child):
+            self.child = child
+
+    missing_b = {"a": "foo"}
+    with pytest.raises(ValueError):
+        assert forge(Parent, {"child": missing_b})

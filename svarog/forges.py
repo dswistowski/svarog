@@ -51,8 +51,14 @@ def forge_annotated_init(type_: Type[T], data: Any, forge: Forge) -> T:
     if not hasattr(data, "items"):
         raise CannotDispatch()
 
+    def forge_or_raise(value, data):
+        try:
+            return forge(value, data)
+        except TypeError as e:
+            raise ValueError(f"Cannot forge {value} from {data}. {e}")
+
     forged = {
-        name: forge(value, data[name])
+        name: forge_or_raise(value, data[name])
         for name, value in _clean_annotations(type_.__init__)
         if name != "return" and name in data
     }
