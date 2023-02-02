@@ -79,6 +79,7 @@ def test_forge_or_union(forge):
     assert forge(str | None, None) is None
     assert forge(str | None, "foo") == "foo"
 
+
 def test_should_fail_if_child_is_not_correctly_forged(forge):
     @dataclass
     class Child:
