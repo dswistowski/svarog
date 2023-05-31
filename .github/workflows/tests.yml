@@ -25,7 +25,8 @@ jobs:
           key: ${{ runner.os }}-poetry-lint-${{ hashFiles('poetry.lock') }}
     - name: Install dependencies
       run: |
-        python -m pip install poetry==1.1.11
+        python -m pip upgrade pip
+        python -m pip install poetry
         poetry install
     - name: Run lint
       run: |
@@ -37,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
     - uses: actions/checkout@v2
@@ -52,7 +53,8 @@ jobs:
         key: ${{ runner.os }}-poetry-tests-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
     - name: Install dependencies
       run: |
-        python -m pip install poetry==1.1.11
+        python -m pip upgrade pip
+        python -m pip install poetry
         poetry install
     - name: Test with pytest
       run: |
