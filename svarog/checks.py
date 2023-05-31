@@ -44,17 +44,17 @@ def is_literal(type_: Any) -> bool:
 
 def is_union(type_: Union) -> bool:
     origin = get_origin(type_)
-    if origin is Union:
+    if origin is Union:  # type: ignore
         return True
     if sys.version_info >= (3, 10):
         UnionType = type(str | None)
-        return origin is UnionType
+        return origin is UnionType  # type: ignore
     return False
 
 
 def is_sequence(type_: Any) -> bool:
     try:
-        return issubclass(get_origin(type_), Sequence)  # type: ignore
+        return issubclass(get_origin(type_), Sequence)
     except TypeError:
         return False
 
