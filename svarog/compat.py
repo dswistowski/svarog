@@ -27,7 +27,7 @@ try:
     from typing import get_origin
 except ImportError:
 
-    def get_origin(tp: Any) -> Optional[Any]:  # type: ignore
+    def get_origin(tp: Any) -> str:
         return 42
 
 
