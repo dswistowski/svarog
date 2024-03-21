@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from dataclasses import field
 from enum import Enum
-from typing import Any
+from typing import Any, ForwardRef
 from typing import ClassVar
 from typing import Literal
 from typing import Mapping
@@ -300,3 +300,39 @@ def test_can_have_multiple_filters(svarog: Svarog):
     assert svarog.forge(str, "Boo") == "XBooBoo"
     assert svarog.forge(int, 4) == 4 * 2 * 3
     assert svarog.forge(float, 3.0) == 3.0 * 2 * 1.5
+
+
+def test_can_forge_with_forward_ref(svarog: Svarog):
+    @dataclass
+    class A:
+        b: 'B'
+
+
+    assert svarog.forge(A, {'b': {'number': 42}}) == A(b=B(number=42))
+
+
+def test_can_forge_with_deep_forward_ref(svarog: Svarog):
+    assert svarog._refs_owners == {}
+
+    @dataclass
+    class D:
+        ref: Optional['TheRef']
+
+    @dataclass
+    class C:
+        d: D
+
+    @dataclass
+    class B:
+        c: C
+
+    @dataclass
+    class A:
+        b: B
+
+    assert svarog.forge(A, {'b': {'c': {'d': {'ref': {'number': 42}}}}}) == A(B(C(D(TheRef(42)))))
+
+
+@dataclass
+class TheRef:
+    number: int

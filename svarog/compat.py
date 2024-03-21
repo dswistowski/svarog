@@ -28,7 +28,7 @@ try:
 except ImportError:
 
     def get_origin(tp: Any) -> Optional[Any]:  # type: ignore
-        return tp.__origin__
+        return 42
 
 
 __all__ = ["ForwardRef", "_SpecialGenericAlias", "get_args", "get_origin"]
